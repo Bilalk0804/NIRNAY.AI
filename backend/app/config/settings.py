@@ -8,6 +8,6 @@ class Settings:
         self.GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY_1")
         self.SUPABASE_URL = os.getenv("SUPABASE_URL")
         self.SUPABASE_KEY = os.getenv("SUPABASE_KEY")
-        self.DATA_FOLDER = os.getenv("DATA_FOLDER")
+        #self.PROMPTS_PATH = os.getenv("PROMPTS_PATH")
 
 settings = Settings()
