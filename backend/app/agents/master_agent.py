@@ -87,26 +87,26 @@ def web_intel_node(state: MasterState) -> dict:
     return {"results": results}
 
 
-def report_generator_node(state: MasterState) -> dict:
-    """
-    Calls the report generator agent to create a comprehensive report.
-    """
-    if "Report Generator Agent" not in state.selected_agents:
-        return {"results": state.results}
+# def report_generator_node(state: MasterState) -> dict:
+#     """
+#     Calls the report generator agent to create a comprehensive report.
+#     """
+#     if "Report Generator Agent" not in state.selected_agents:
+#         return {"results": state.results}
     
-    # Prepare context from previous results
-    context = json.dumps(state.results) if state.results else "No previous data"
+#     # Prepare context from previous results
+#     context = json.dumps(state.results) if state.results else "No previous data"
     
-    # Call report generator agent
-    report_result = report_generator_agent.run_report_generator_agent(
-        state.query, 
-        context
-    )
+#     # Call report generator agent
+#     report_result = report_generator_agent.run_report_generator_agent(
+#         state.query, 
+#         context
+#     )
     
-    results = state.results.copy()
-    results["report"] = report_result
+#     results = state.results.copy()
+#     results["report"] = report_result
     
-    return {"results": results}
+#     return {"results": results}
 
 
 def synthesizer_node(state: MasterState) -> dict:
