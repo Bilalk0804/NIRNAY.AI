@@ -157,12 +157,11 @@ def handle_user_query(user_query: str):
             summary_array=json.dumps(summary, indent=2)
         )
 
-        messages=[
-            {"role": "user", "content": final_prompt}
-        ],
         response = client.chat.completions.create(
             model="gemini-2.5-flash",
-            messages=messages,
+            messages=[
+                {"role": "user", "content": final_prompt}
+            ],
             temperature=0.0
         )
         final_result = response.choices[0].message.content

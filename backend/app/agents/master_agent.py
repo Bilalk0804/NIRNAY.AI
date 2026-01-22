@@ -55,6 +55,14 @@ Query: {state.query}
     
     try:
         content = response.choices[0].message.content
+        
+        # CRITICAL: Defensive null check prevents NoneType.find() crash
+        if not content:
+            return {
+                "selected_agents": ["Web Intelligence Agent", "Report Generator Agent"],
+                "routing_reason": "Default routing due to empty response"
+            }
+        
         # Extract JSON from response
         start_idx = content.find('{')
         end_idx = content.rfind('}') + 1
@@ -145,6 +153,18 @@ Provide a comprehensive final summary with recommendations."""
     
     try:
         content = response.choices[0].message.content
+        
+        # CRITICAL: Defensive null check prevents NoneType.find() crash
+        if not content:
+            return {
+                "final_output": SynthOutput(
+                    final_summary="No response from model",
+                    recommendations="Please try again.",
+                    tables=[],
+                    charts=[]
+                )
+            }
+        
         # Try to extract JSON
         start_idx = content.find('{')
         end_idx = content.rfind('}') + 1
@@ -169,7 +189,7 @@ Provide a comprehensive final summary with recommendations."""
     except (json.JSONDecodeError, ValueError):
         return {
             "final_output": SynthOutput(
-                final_summary=response.choices[0].message.content,
+                final_summary=response.choices[0].message.content or "Error processing query",
                 recommendations="",
                 tables=[],
                 charts=[]

@@ -59,6 +59,15 @@ Format the response as JSON with:
         
         content = response.choices[0].message.content
         
+        # CRITICAL: Defensive null check prevents NoneType.find() crash
+        if not content:
+            return SynthOutput(
+                final_summary="No response from model",
+                recommendations="Please try again.",
+                tables=[],
+                charts=[]
+            )
+        
         try:
             # Try to parse JSON response
             start_idx = content.find('{')
